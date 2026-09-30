@@ -774,6 +774,506 @@
           "type": "bitmap",
           "name": "SPRITE_P151",
           "file": "sprites/p151.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P152",
+          "file": "sprites/p152.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P153",
+          "file": "sprites/p153.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P154",
+          "file": "sprites/p154.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P155",
+          "file": "sprites/p155.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P156",
+          "file": "sprites/p156.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P157",
+          "file": "sprites/p157.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P158",
+          "file": "sprites/p158.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P159",
+          "file": "sprites/p159.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P160",
+          "file": "sprites/p160.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P161",
+          "file": "sprites/p161.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P162",
+          "file": "sprites/p162.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P163",
+          "file": "sprites/p163.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P164",
+          "file": "sprites/p164.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P165",
+          "file": "sprites/p165.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P166",
+          "file": "sprites/p166.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P167",
+          "file": "sprites/p167.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P168",
+          "file": "sprites/p168.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P169",
+          "file": "sprites/p169.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P170",
+          "file": "sprites/p170.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P171",
+          "file": "sprites/p171.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P172",
+          "file": "sprites/p172.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P173",
+          "file": "sprites/p173.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P174",
+          "file": "sprites/p174.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P175",
+          "file": "sprites/p175.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P176",
+          "file": "sprites/p176.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P177",
+          "file": "sprites/p177.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P178",
+          "file": "sprites/p178.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P179",
+          "file": "sprites/p179.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P180",
+          "file": "sprites/p180.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P181",
+          "file": "sprites/p181.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P182",
+          "file": "sprites/p182.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P183",
+          "file": "sprites/p183.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P184",
+          "file": "sprites/p184.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P185",
+          "file": "sprites/p185.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P186",
+          "file": "sprites/p186.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P187",
+          "file": "sprites/p187.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P188",
+          "file": "sprites/p188.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P189",
+          "file": "sprites/p189.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P190",
+          "file": "sprites/p190.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P191",
+          "file": "sprites/p191.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P192",
+          "file": "sprites/p192.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P193",
+          "file": "sprites/p193.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P194",
+          "file": "sprites/p194.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P195",
+          "file": "sprites/p195.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P196",
+          "file": "sprites/p196.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P197",
+          "file": "sprites/p197.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P198",
+          "file": "sprites/p198.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P199",
+          "file": "sprites/p199.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P200",
+          "file": "sprites/p200.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P201",
+          "file": "sprites/p201.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P202",
+          "file": "sprites/p202.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P203",
+          "file": "sprites/p203.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P204",
+          "file": "sprites/p204.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P205",
+          "file": "sprites/p205.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P206",
+          "file": "sprites/p206.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P207",
+          "file": "sprites/p207.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P208",
+          "file": "sprites/p208.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P209",
+          "file": "sprites/p209.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P210",
+          "file": "sprites/p210.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P211",
+          "file": "sprites/p211.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P212",
+          "file": "sprites/p212.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P213",
+          "file": "sprites/p213.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P214",
+          "file": "sprites/p214.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P215",
+          "file": "sprites/p215.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P216",
+          "file": "sprites/p216.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P217",
+          "file": "sprites/p217.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P218",
+          "file": "sprites/p218.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P219",
+          "file": "sprites/p219.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P220",
+          "file": "sprites/p220.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P221",
+          "file": "sprites/p221.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P222",
+          "file": "sprites/p222.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P223",
+          "file": "sprites/p223.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P224",
+          "file": "sprites/p224.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P225",
+          "file": "sprites/p225.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P226",
+          "file": "sprites/p226.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P227",
+          "file": "sprites/p227.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P228",
+          "file": "sprites/p228.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P229",
+          "file": "sprites/p229.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P230",
+          "file": "sprites/p230.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P231",
+          "file": "sprites/p231.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P232",
+          "file": "sprites/p232.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P233",
+          "file": "sprites/p233.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P234",
+          "file": "sprites/p234.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P235",
+          "file": "sprites/p235.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P236",
+          "file": "sprites/p236.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P237",
+          "file": "sprites/p237.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P238",
+          "file": "sprites/p238.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P239",
+          "file": "sprites/p239.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P240",
+          "file": "sprites/p240.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P241",
+          "file": "sprites/p241.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P242",
+          "file": "sprites/p242.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P243",
+          "file": "sprites/p243.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P244",
+          "file": "sprites/p244.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P245",
+          "file": "sprites/p245.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P246",
+          "file": "sprites/p246.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P247",
+          "file": "sprites/p247.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P248",
+          "file": "sprites/p248.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P249",
+          "file": "sprites/p249.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P250",
+          "file": "sprites/p250.png"
+        },
+        {
+          "type": "bitmap",
+          "name": "SPRITE_P251",
+          "file": "sprites/p251.png"
         }
       ]
     }
