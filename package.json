@@ -17,7 +17,14 @@
     "watchapp": {
       "watchface": false
     },
-    "messageKeys": [],
+    "enableMultiJS": true,
+    "messageKeys": [
+      "SprReq",
+      "SprId",
+      "SprSeq",
+      "SprTotal",
+      "SprData"
+    ],
     "resources": {
       "media": [
         {

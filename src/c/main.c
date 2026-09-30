@@ -6,12 +6,14 @@
 #define SPR 56
 #define ZOOM 2
 #define DISP (SPR * ZOOM)
-#define NUM_GENS 2
+#define NUM_GENS 4
+#define CHUNK 900
+#define LOAD_TRIES 6
 
 enum { RES_NONE = 0, RES_CORRECT = 1, RES_WRONG = 2 };
 
 typedef struct { const char *name; int first, last; } Gen;
-static const Gen GENS[NUM_GENS] = {{"Kanto", 1, 151}, {"Johto", 152, 251}};
+static const Gen GENS[NUM_GENS] = {{"Kanto", 1, 151}, {"Johto", 152, 251}, {"Hoenn", 252, 386}, {"Sinnoh", 387, 493}};
 
 static Window *s_main, *s_menu, *s_settings;
 static Layer *s_canvas;
@@ -19,7 +21,10 @@ static MenuLayer *s_list, *s_set_list;
 static GBitmap *s_bmp;
 static int s_key, s_idx, s_result, s_mask = 1;
 static int s_opt[3];
-static bool s_absent, s_daily, s_mask_changed;
+static bool s_absent, s_daily, s_mask_changed, s_loading, s_err;
+static uint8_t *s_png;
+static int s_png_len, s_png_got, s_tries;
+static AppTimer *s_load_timer;
 
 static int day_key(void) {
   time_t now = time(NULL);
@@ -43,7 +48,7 @@ static int pool_nth(int n) {
   return 0;
 }
 
-static GColor pixel_color(const GBitmap *src, const GColor *pal, GBitmapFormat fmt, const uint8_t *data, int bpr, int x, int y) {
+static GColor pixel_color(const GColor *pal, GBitmapFormat fmt, const uint8_t *data, int bpr, int x, int y) {
   const uint8_t *row = data + y * bpr;
   switch (fmt) {
     case GBitmapFormat8Bit: return (GColor){.argb = row[x]};
@@ -56,7 +61,9 @@ static GColor pixel_color(const GBitmap *src, const GColor *pal, GBitmapFormat f
 
 static void load_sprite(void) {
   if (s_bmp) { gbitmap_destroy(s_bmp); s_bmp = NULL; }
-  GBitmap *src = gbitmap_create_with_resource(SPRITES[s_idx]);
+  GBitmap *src = NULL;
+  if (s_idx < NUM_LOCAL) src = gbitmap_create_with_resource(SPRITES[s_idx]);
+  else if (s_png && s_png_len > 0) src = gbitmap_create_from_png_data(s_png, s_png_len);
   if (!src) return;
   s_bmp = gbitmap_create_blank(GSize(DISP, DISP), GBitmapFormat8Bit);
   if (s_bmp) {
@@ -70,7 +77,7 @@ static void load_sprite(void) {
     int dbpr = gbitmap_get_bytes_per_row(s_bmp);
     for (int y = 0; y < sb.size.h && y < SPR; y++) {
       for (int x = 0; x < sb.size.w && x < SPR; x++) {
-        GColor c = pixel_color(src, pal, fmt, sd, sbpr, x, y);
+        GColor c = pixel_color(pal, fmt, sd, sbpr, x, y);
         uint8_t v = c.a ? (sil ? GColorBlack.argb : c.argb) : 0;
         for (int dy = 0; dy < ZOOM; dy++)
           for (int dx = 0; dx < ZOOM; dx++) dd[(y * ZOOM + dy) * dbpr + x * ZOOM + dx] = v;
@@ -78,6 +85,61 @@ static void load_sprite(void) {
     }
   }
   gbitmap_destroy(src);
+}
+
+static void request_sprite(void) {
+  DictionaryIterator *it;
+  if (app_message_outbox_begin(&it) != APP_MSG_OK) return;
+  dict_write_int32(it, MESSAGE_KEY_SprReq, s_idx + 1);
+  app_message_outbox_send();
+}
+
+static void load_timeout(void *d) {
+  s_load_timer = NULL;
+  if (!s_loading) return;
+  if (++s_tries > LOAD_TRIES) {
+    s_loading = false;
+    s_err = true;
+    if (s_canvas) layer_mark_dirty(s_canvas);
+    return;
+  }
+  if (s_png_got == 0) request_sprite();
+  s_load_timer = app_timer_register(2500, load_timeout, NULL);
+}
+
+static void begin_remote_load(void) {
+  free(s_png);
+  s_png = NULL;
+  s_png_len = s_png_got = s_tries = 0;
+  s_loading = true;
+  s_err = false;
+  if (s_load_timer) app_timer_cancel(s_load_timer);
+  request_sprite();
+  s_load_timer = app_timer_register(2500, load_timeout, NULL);
+}
+
+static void inbox_received(DictionaryIterator *it, void *ctx) {
+  Tuple *id = dict_find(it, MESSAGE_KEY_SprId), *seq = dict_find(it, MESSAGE_KEY_SprSeq);
+  Tuple *tot = dict_find(it, MESSAGE_KEY_SprTotal), *data = dict_find(it, MESSAGE_KEY_SprData);
+  if (!id || !seq || !tot || !data || !s_loading) return;
+  if (id->value->int32 != s_idx + 1) return;
+  int sq = seq->value->int32, total = tot->value->int32;
+  if (sq == 0) {
+    free(s_png);
+    s_png = malloc(total * CHUNK);
+    s_png_len = 0;
+    s_png_got = 0;
+  }
+  if (!s_png || sq != s_png_got || sq * CHUNK + (int)data->length > total * CHUNK) return;
+  memcpy(s_png + sq * CHUNK, data->value->data, data->length);
+  s_png_len = sq * CHUNK + data->length;
+  s_png_got++;
+  if (s_png_got == total) {
+    s_loading = false;
+    if (s_load_timer) { app_timer_cancel(s_load_timer); s_load_timer = NULL; }
+    load_sprite();
+    if (s_canvas) layer_mark_dirty(s_canvas);
+  }
 }
 
 static void pick_options(void) {
@@ -112,7 +174,9 @@ static void start_round(bool daily) {
   }
   pick_options();
   s_result = RES_NONE;
-  load_sprite();
+  s_loading = s_err = false;
+  if (s_idx < NUM_LOCAL) load_sprite();
+  else begin_remote_load();
   if (s_canvas) layer_mark_dirty(s_canvas);
 }
 
@@ -130,12 +194,14 @@ static void canvas_update(Layer *l, GContext *ctx) {
   graphics_fill_circle(ctx, GPoint(b.size.w / 2, 98), 90);
   graphics_context_set_compositing_mode(ctx, GCompOpSet);
   if (s_bmp) graphics_draw_bitmap_in_rect(ctx, s_bmp, GRect((b.size.w - DISP) / 2, 42, DISP, DISP));
+  if (s_loading) draw_center(ctx, "Loading...", fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD), GRect(0, 84, b.size.w, 30), GColorWhite);
+  if (s_err) draw_center(ctx, "Can't reach phone", fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD), GRect(0, 70, b.size.w, 60), GColorWhite);
 
   GFont f24 = fonts_get_system_font(FONT_KEY_GOTHIC_24_BOLD);
   GFont f18 = fonts_get_system_font(FONT_KEY_GOTHIC_18_BOLD);
   if (!done) {
     draw_center(ctx, "Who's that PebbleMon?", f18, GRect(0, 2, b.size.w, 24), GColorWhite);
-    draw_center(ctx, "Press SELECT to guess", f18, GRect(0, 190, b.size.w, 24), GColorWhite);
+    draw_center(ctx, s_err ? "SELECT: retry" : s_loading ? "" : "Press SELECT to guess", f18, GRect(0, 190, b.size.w, 24), GColorWhite);
   } else {
     draw_center(ctx, "SELECT: play again", fonts_get_system_font(FONT_KEY_GOTHIC_14), GRect(0, 4, b.size.w, 20), GColorDarkGray);
     draw_center(ctx, NAMES[s_idx], f24, GRect(0, 168, b.size.w, 30), GColorBlack);
@@ -167,7 +233,7 @@ static int16_t set_height(MenuLayer *m, MenuIndex *i, void *d) { return 52; }
 static void set_draw(GContext *ctx, const Layer *cl, MenuIndex *i, void *d) {
   char sub[24];
   const Gen *g = &GENS[i->row];
-  snprintf(sub, sizeof sub, "%d-%d", g->first, g->last);
+  snprintf(sub, sizeof sub, "%d-%d%s", g->first, g->last, g->first > NUM_LOCAL ? " (phone)" : "");
   menu_cell_basic_draw(ctx, cl, g->name, sub, NULL);
   GRect b = layer_get_bounds(cl);
   GRect box = GRect(b.size.w - 34, (b.size.h - 20) / 2, 20, 20);
@@ -220,7 +286,8 @@ static void menu_load(Window *w) {
 static void menu_unload(Window *w) { menu_layer_destroy(s_list); }
 
 static void select_click(ClickRecognizerRef r, void *c) {
-  if (s_result != RES_NONE) { start_round(false); return; }
+  if (s_loading) return;
+  if (s_result != RES_NONE || s_err) { start_round(false); return; }
   window_stack_push(s_menu, true);
 }
 static void click_config(void *c) { window_single_click_subscribe(BUTTON_ID_SELECT, select_click); }
@@ -238,6 +305,8 @@ int main(void) {
   s_key = day_key();
   if (persist_exists(PK_MASK)) s_mask = persist_read_int(PK_MASK) & ((1 << NUM_GENS) - 1);
   if (s_mask == 0) s_mask = 1;
+  app_message_register_inbox_received(inbox_received);
+  app_message_open(1200, 64);
   s_main = window_create();
   window_set_window_handlers(s_main, (WindowHandlers){.load = main_load, .unload = main_unload});
   s_menu = window_create();
@@ -249,6 +318,7 @@ int main(void) {
   window_stack_push(s_main, true);
   app_event_loop();
   if (s_bmp) gbitmap_destroy(s_bmp);
+  free(s_png);
   window_destroy(s_settings);
   window_destroy(s_menu);
   window_destroy(s_main);

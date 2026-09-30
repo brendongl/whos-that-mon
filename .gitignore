@@ -1,3 +1,4 @@
 build/
 .lock-waf*
 resources/sprites/
+src/pkjs/sprites.js
