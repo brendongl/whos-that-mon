@@ -8,7 +8,7 @@
   "private": true,
   "dependencies": {},
   "pebble": {
-    "displayName": "Who's That Mon",
+    "displayName": "Who's That PebbleMon",
     "uuid": "6b1c7e52-3d0a-4f7e-9a41-2c8f5d9e1a37",
     "sdkVersion": "3",
     "targetPlatforms": [

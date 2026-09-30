@@ -1,4 +1,4 @@
-# Who's That Mon
+# Who's That PebbleMon
 
 A "who's that?" guessing game for Pebble Time 2 (Emery). A new mystery creature
 each day (first 151) appears as a black silhouette. Press SELECT, pick the right
