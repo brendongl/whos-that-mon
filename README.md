@@ -11,7 +11,7 @@ Sprites are not included in this repo. Fetch and prepare them, then build:
 
 ```bash
 pip install pillow
-python3 tools/fetch.py     # downloads sprites (PokeAPI/sprites), writes resources/ + src/c/names.h
+python3 tools/fetch.py     # downloads names, types and sprites (PokeAPI), writes src/c/names.h + src/pkjs/sprites.js
 pebble build
 pebble install --phone <ip>
 ```
@@ -23,6 +23,6 @@ Creatures Inc. or The Pokémon Company. Pokémon and all related names and artwo
 are trademarks/copyright of their respective owners. Code is MIT licensed; that
 license does not cover the artwork.
 
-## Gen 3 & 4 (sent from the phone)
+## How sprites get to the watch
 
-Hoenn and Sinnoh sprites don't fit on the watch, so they live in the phone-side JS and are sent over AppMessage on demand. Run `python3 tools/fetch_phone.py` before `pebble build` to generate `src/pkjs/sprites.js`.
+All 1025 Pokémon (Gen 1-9) are supported. Sprites don't fit in watch storage, so they live in the phone-side JS and are sent over AppMessage when a round needs one. The watch only holds names and types. The phone must be connected to play.
