@@ -8,8 +8,8 @@
 #define PK_CHOICES 6
 #define PK_NONE 7
 #define PK_SIL 8
-#define SPR 56
-#define ZOOM 2
+#define SPR 112
+#define ZOOM 1
 #define DISP (SPR * ZOOM)
 #define NUM_GENS 9
 #define NUM_TYPES 18

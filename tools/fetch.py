@@ -1,11 +1,11 @@
 """Builds src/c/names.h (names + types) and src/pkjs/sprites.js (all sprites, sent to the watch on demand)."""
 import base64, csv, io, json, os, subprocess, tempfile, unicodedata, urllib.request
 from concurrent.futures import ThreadPoolExecutor
-from PIL import Image
+from PIL import Image, ImageEnhance
 op = urllib.request.build_opener(); op.addheaders = [('User-Agent', 'Mozilla/5.0')]; urllib.request.install_opener(op)
 D = os.path.join(os.path.dirname(os.path.abspath(__file__)), '..')
 TOTAL = 1025
-S = 56
+S = 112
 TOOLS = os.path.expanduser('~/.local/share/pebble-sdk/SDKs/4.33.1/sdk-core/pebble/common/tools')
 PY = os.path.expanduser('~/.local/share/pipx/venvs/pebble-tool/bin/python')
 CSV = 'https://raw.githubusercontent.com/PokeAPI/pokeapi/master/data/v2/csv/'
@@ -25,18 +25,22 @@ for r in rows('pokemon_types.csv'):
     if i <= TOTAL: types[i][int(r['slot']) - 1] = int(r['type_id'])
 
 tmp = tempfile.mkdtemp()
+_p = [c * 85 for r in range(4) for g in range(4) for b in range(4) for c in (r, g, b)]
+PAL = Image.new('P', (1, 1)); PAL.putpalette(_p + [0] * (768 - len(_p)))
 
 def sprite(i):
     p = f'versions/generation-v/black-white/{i}.png' if i <= 649 else f'{i}.png'
     im = Image.open(io.BytesIO(urllib.request.urlopen(
         f'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/{p}').read())).convert('RGBA')
     im = im.crop(im.getbbox())
+    n = max(1, min(S // im.width, S // im.height))
+    im = im.resize((im.width * n, im.height * n), Image.NEAREST)
     k = min(S / im.width, S / im.height)
     im = im.resize((max(1, round(im.width * k)), max(1, round(im.height * k))), Image.LANCZOS)
     c = Image.new('RGBA', (S, S), (0, 0, 0, 0))
     c.paste(im, ((S - im.width) // 2, S - im.height), im)
     a = c.split()[3].point(lambda v: 255 if v > 127 else 0)
-    q = c.convert('RGB').quantize(15, method=Image.MEDIANCUT, dither=Image.NONE).convert('RGBA'); q.putalpha(a)
+    q = ImageEnhance.Color(c.convert('RGB')).enhance(1.2).quantize(palette=PAL, dither=Image.NONE).convert('RGBA'); q.putalpha(a)
     q.save(f'{tmp}/{i}.png')
 
 with ThreadPoolExecutor(16) as ex: list(ex.map(sprite, range(1, TOTAL + 1)))
